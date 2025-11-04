@@ -1,5 +1,5 @@
 //更新日志：该版本输入学号查找成绩 注：此小版本为折半查找 知识点：查找
-//#include<stdio.h>
+#include<stdio.h>
 #define N 40
 int main(){
 	double AV(int score[],int n);
