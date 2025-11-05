@@ -1,27 +1,30 @@
-//¸üĞÂÈÕÖ¾£º¸Ã°æ±¾¼ÓÈëÑ§ºÅ¹¦ÄÜ
-//ÖªÊ¶µã£º¼üÖµ 
+//æ›´æ–°æ—¥å¿—ï¼šè¯¥ç‰ˆæœ¬åŠ å…¥å­¦å·åŠŸèƒ½
+//çŸ¥è¯†ç‚¹ï¼šé”®å€¼ 
 #include<stdio.h>
 #define N 40
+
+double AV(int score[],int n);
+int SC(int score[],long num[]);
+void SORT(int score[],long num[],int n);
+void PRINT(int score[],long num[],int n);
+
 int main(){
-	double AV(int score[],int n);
-	int SC(int score[],long num[]);
-	void SORT(int score[],long num[],int n);
-	void PRINT(int score[],long num[],int n); 
+	 
 	
 	int score[N];
 	int n;
 	double av;
-	long num[N];//Íü¼Ç¶¨ÒåÎªÊı×éÁË 
+	long num[N];//å¿˜è®°å®šä¹‰ä¸ºæ•°ç»„äº† 
 	
 	n=SC(score,num);
 	av=AV(score,n);
-	printf("ÄãÃÇ°à%dÈËµÄÆ½¾ù·ÖÊÇ%f\n",n,av);
+	printf("ä½ ä»¬ç­%däººçš„å¹³å‡åˆ†æ˜¯%f\n",n,av);
 	SORT(score,num,n);
-	PRINT(score,num,n);//¹íÊ¹Éñ²îÓÖ½«numĞ´³Émax 
+	PRINT(score,num,n);//é¬¼ä½¿ç¥å·®åˆå°†numå†™æˆmax 
 	
 	return 0;
 }
-double AV(int score[],int n){//¼ÇµÃÕâÒ²Òª¼Ódouble 
+double AV(int score[],int n){//è®°å¾—è¿™ä¹Ÿè¦åŠ double 
 	int i=0;
 	double sum=0.0;
 	for (i=0;i<n;i++){
@@ -34,16 +37,16 @@ int SC(int score[],long num[]){
 	int i=-1;
 	do{
 		i++;
-		printf("ÇëÊäÈëµÚ%dÃûÍ¬Ñ§µÄÑ§ºÅºÍ³É¼¨\n",i+1);//¹íÊ¹Éñ²îĞ´³Én+1 
+		printf("è¯·è¾“å…¥ç¬¬%dååŒå­¦çš„å­¦å·å’Œæˆç»©\n",i+1);//é¬¼ä½¿ç¥å·®å†™æˆn+1 
 		scanf("%ld%d",&num[i],&score[i]);
 	}while (num[i]>0&&score[i]>0);
 	
 	return i;
 	}
 
-void SORT(int score[],long num[],int n){//²»ÒªÔÚÀ¨ºÅºóÃæ¼Ó£» 
+void SORT(int score[],long num[],int n){//ä¸è¦åœ¨æ‹¬å·åé¢åŠ ï¼› 
 	int i,j,k,max;
-	for(i=0;i<n-1;i++){//×¢Òâ£¬Êı×é×îºóÒ»Î»Îªscore[n-1],ËùÒÔ´Ë´¦ÒªÓÃi<n-1 £¬¶øÇÒ¼ÇµÃÓÃ£»²»ÒªÓÃ£¬ 
+	for(i=0;i<n-1;i++){//æ³¨æ„ï¼Œæ•°ç»„æœ€åä¸€ä½ä¸ºscore[n-1],æ‰€ä»¥æ­¤å¤„è¦ç”¨i<n-1 ï¼Œè€Œä¸”è®°å¾—ç”¨ï¼›ä¸è¦ç”¨ï¼Œ 
 		k=i;
 		for (j=i+1;j<n;j++){
 			if(score[j]>score[k]){
@@ -65,8 +68,8 @@ void SORT(int score[],long num[],int n){//²»ÒªÔÚÀ¨ºÅºóÃæ¼Ó£»
 	
 	
 void PRINT(int score[],long num[],int n){
-	int i=0;//ÓÖÍü¼Ç¶¨Òåi 
-	printf("Õâ×éÑ§Éú³É¼¨´Ó¸ßµ½µÍÎª:\n"); 
+	int i=0;//åˆå¿˜è®°å®šä¹‰i 
+	printf("è¿™ç»„å­¦ç”Ÿæˆç»©ä»é«˜åˆ°ä½ä¸º:\n"); 
 	for (i=0;i<n;i++){
 		printf("\t%ld\t%d\n",num[i],score[i]);
 	}
