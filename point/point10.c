@@ -1,10 +1,12 @@
+//此版本用了函数指针实现升序降序选择，减少代码重复
 #include <stdio.h>
 #define N 40
 void READSCORE(int score[],long num[],int n);
 void PRINT(int score[],long num[],int n);
-void UP(int score[],long num[],int n);
-void DOWN(int score[],long num[],int n);
 void SWAP(int *a,int *b,long *c,long *d);
+void SELECTIONSORT(int score[],long num[],int n,int(*compare)(int a,int b));
+int Asending(int a,int b);
+int Dsending(int a,int b);
 int main(void){
     int score[N];
     long num[N];
@@ -16,11 +18,11 @@ int main(void){
     int haipeng=0;
     scanf("%d",&haipeng);
     if(haipeng==1){
-        UP(score,num,n);
+        SELECTIONSORT(score,num,n,Asending);
         PRINT(score,num,n);
     }
     else if(haipeng==2){
-        DOWN(score,num,n);
+         SELECTIONSORT(score,num,n,Dsending);
         PRINT(score,num,n);
     }
     else{
@@ -43,27 +45,19 @@ void PRINT(int score[],long num[],int n){
     }
 }
 
-void UP(int score[],long num[],int n){
-    int i,k,j;
-    for(i=0;i<n-1;i++){
-        k=i;
-        for(j=i+1;j<n;j++){
-            if(score[j]<score[k]){
-                k=j;
-            }
-        }
-        if(k!=i){
-            SWAP(&score[i],&score[k],&num[i],&num[k]);
-        }
-    }
+int Asending(int a,int b){
+    return a<b;
+}
+int Dsending(int a,int b){
+    return a<b;
 }
 
-void DOWN(int score[],long num[],int n){
+void SELECTIONSORT(int score[],long num[],int n,int(*compare)(int a,int b)){
     int i,k,j;
     for(i=0;i<n-1;i++){
         k=i;
         for(j=i+1;j<n;j++){
-            if(score[j]>score[k]){
+            if(compare(score[j],score[k])){
                 k=j;
             }
         }
