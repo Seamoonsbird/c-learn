@@ -8,3 +8,5 @@ int main(void){
     printf("%s %s.\n",ptr,name);
     return 0;
 }
+//"看不懂字符数组和字符指针在使用上的不同之..."点击查看元宝的回答
+//https://yb.tencent.com/s/IrJ6aTRf0cCS
