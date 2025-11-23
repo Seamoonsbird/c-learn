@@ -24,3 +24,4 @@ vendor/        # Go 依赖
 *.log
 *.tmp
 logs/
+.vscode
