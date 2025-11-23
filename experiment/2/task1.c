@@ -58,9 +58,10 @@ float uaFindInterestById(const Customer customers[], int n, int id, Metrics *m) 
         if(m) m->compares++;
         if(customers[i].id==id){
             return customers[i].interest;
-        }else{
-            return INTEREST_NOT_FOUND;
         }
+    }
+    if(i==n){
+        return INTEREST_NOT_FOUND;
     }
 }
 
@@ -92,6 +93,7 @@ int uaDeleteById(Customer customers[], int n, int id, Metrics *m) {
     int idx=0;
     for(i=0;i<n;i++){
         if(customers[i].id==id){
+            if(m) m->compares++;
             idx=i;
             break;
         }
@@ -158,14 +160,9 @@ int oaInsertKeepOrder(Customer customers[], int n, int capacity, Customer c, Met
         else if(customers[mid].id>c.id){
             hi=mid-1;
         }
-        else{
-            pos=mid;
-            break;
-        }
     }
-    if(lo>hi){
-        return -1;
-    }
+    pos=lo;
+    //你的二分查找试图寻找一个与 c.id 完全相等的位置，如果找不到（即 lo > hi），你直接返回了 -1，这导致无法插入新的、ID 不存在的元素。题目要求是找到 “第一个使 customers[pos].id >= c.id 的位置”，这个位置即使在数组中不存在相等的 ID 时也一定存在（可能在数组末尾）。
     for(int i=n;i>pos;i--){
         customers[i] = customers[i-1];
         if (m) m->moves++;
@@ -199,6 +196,12 @@ int oaDeleteById(Customer customers[], int n, int id, Metrics *m) {
             break;
         }
     }
+    if(idx==0&&customers[0].id!=id){
+        return -1;
+    }
+    /*
+    这个函数的问题与 uaDeleteById 类似，但更为隐蔽。你没有检查二分查找是否真的找到了目标 ID。如果 ID 不存在，循环结束后，idx 仍然是初始值 0，你的代码会错误地删除数组的第一个元素。
+    */
     for(int i=idx+1;i<n;i++){
         customers[i-1] = customers[i];
         if (m) m->moves++;
