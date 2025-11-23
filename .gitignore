@@ -1,0 +1,26 @@
+# 忽略系统临时文件
+##.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# 忽略 IDE 配置文件
+.idea/     # IntelliJ IDEA
+.vscode/   # VS Code
+*.suo      # Visual Studio
+*.sln      # Visual Studio
+
+# 忽略编译产物
+bin/       # 可执行文件目录
+build/     # 构建目录
+*.o        # C/C++ 目标文件
+*.exe      # Windows 可执行文件
+*.out      # Linux/macOS 可执行文件
+
+# 忽略依赖目录
+node_modules/  # Node.js 依赖
+venv/          # Python 虚拟环境
+vendor/        # Go 依赖
+
+# 忽略日志和临时文件
+*.log
+*.tmp
+logs/
