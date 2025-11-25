@@ -2,17 +2,17 @@
 #define ROW 2
 #define COL 3
 // 函数功能：计算矩阵相乘之积，结果存于二维数组c中
-MultiplyMatrix(int a[ROW][COL], int b[COL][ROW], int   ① )
+int MultiplyMatrix(int a[ROW][COL], int b[COL][ROW], int c[ROW][ROW] )
 {
 	int i, j, k;
 	for( i=0; i<ROW; i++)
 	{
 		for( j=0; j<ROW; j++)
 		{
-			c[i][j]=   ②      ;
+			c[i][j]=0;;
 			for( k=0; k<COL; k++)
 			{
-				c[i][j]=       ③             ;
+				c[i][j]=c[i][j]+a[i][k]*b[k][j];
 			}
 		}
 	}
@@ -25,32 +25,32 @@ void PrintMatrix(int a[ROW][ROW])
 	{
 		for( j=0; j<ROW; j++)
 		{
-			printf(“%6d”, a[i][j]);
+			printf("%6d", a[i][j]);
 		}
-		     ④    ;
+		printf("\n");
 	}
 }
 int main(void)
 {
 	int a[ROW][COL], b[COL][ROW], c[ROW][ROW], i, j;
-	printf(“Input 2*3 matrix a:\n”);
+	printf("Input 2*3 matrix a:\n");
 	for( i=0; i<ROW; i++)
 	{
 		for( j=0; j<COL; j++)
 		{
-			scanf(“%d”,     ⑤      );
+			scanf("%d",&a[i][j]);
 		}
 	}
-	printf(“Input 3*2 matrix b:\n”);
+	printf("Input 3*2 matrix b:\n");
 	for( i=0; i<COL; i++)
 	{
 		for( j=0; j<ROW; j++)
 		{
-			scanf(“%d”,    ⑥    );
+			scanf("%d",&b[i][j]);
 		}
 	}
-	MultiplyMatrix(     ⑦     );
-	printf(“Results:\n);
+	MultiplyMatrix(a, b, c);
+	printf("Results:\n");
 	PrintMatrix(c);
 	return 0;
 }
