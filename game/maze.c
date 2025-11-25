@@ -7,7 +7,7 @@
 void Show(char str[][M],int n);
 void UpdateWithInput(char str[][M],int n);
 int main(void){
-    char str[Z][M]={
+    char str[N][M]={
         "************",
         "*o         *",
         "* **********",
@@ -22,7 +22,7 @@ int main(void){
         "************",
     };
     int n=12;
-    Show(str,r);
+    Show(str,n);
     UpdateWithInput(str,n);
     return 0;
 }
@@ -38,11 +38,11 @@ void UpdateWithInput(char str[][M],int n){
     int x=1,y=1;
     int exitX=10,exitY=10;
     char input;
-    while(x!=exitx||y!=exitY){
+    while(x!=exitX||y!=exitY){
         if(kbhit()){
             input =getch();
             if(input=='a'&&str[x][y-1]!='*'){
-                str[x][y]='';
+                str[x][y]=' ';
                 y--;
                 str[x][y]='o';
             }
@@ -65,7 +65,7 @@ void UpdateWithInput(char str[][M],int n){
             Show(str,n);
             Sleep(200);
         }
-        printf("You Win!\n");
-        system("PAUSE");
     }
+    printf("You Win!\n");
+    system("PAUSE");
 }
