@@ -1,31 +1,29 @@
 #include <stdio.h>
+#define N 100
 int main(void){
     int i=0,j=0;
     int arr[10];
-    printf("请输入10个整数：\n");
-    for (i=0;i<10;i++){
+
+    printf("请问有几个整数：\n");
+    int n=0;
+    scanf("%d",&n);
+    printf("请输入%d个整数：\n",n);
+    for (i=0;i<n;i++){
         scanf("%d",arr+i);
     }
-    printf("排序前的结果为：\n");
-    for (i=0;i<10;i++){
-        printf("\t%d",*(arr+i));
-    }
     printf("\n");
-    for (i=1;i<10;i++){
-        int k=0;
+
+    for (i=1;i<n;i++){
+        int k=-1;
         for (j=i-1;j>=0;j--){
             if (arr[i]>=arr[j]){
                 k=j;
                 break;
             }
         }
-
-        if (j<0){
-            k=-1;
-        }
 /*这一点最后想到的，因为如果有一个数比前面任何一个数都要小的话，
 那么k就会是0，就相当于说arr[0]第一个数据比他小再进行操作，显然是不合理的
-那我就可以将k初始化为-1（下一个版本加入）*/
+那我就可以将k初始化为-1（此版本加入）*/
         if(k+1==i){
             continue;
         }
@@ -40,8 +38,9 @@ int main(void){
         }
     }
     printf("排序后的结果为：\n");
-    for (i=0;i<10;i++){
+    for (i=0;i<n;i++){
         printf("\t%d",*(arr+i));
     }
+    printf("\n");
     return 0;
 }
