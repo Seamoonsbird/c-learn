@@ -39,7 +39,9 @@ void mergeSort(int array[],int left,int right){
         merge(array,left,mid,right);
     }
 }
-
+/*
+用了递归思想，分两半排好序，两半中的一半又分为两半
+*/
 void merge(int array[],int left,int mid,int right){
     int temp[N];
     int i=left;
