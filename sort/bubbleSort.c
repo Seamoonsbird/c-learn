@@ -22,7 +22,7 @@ int main(void){
     for (i=0;i<n;i++){
         int flag=1;
         for (j=0;j<n;j++){
-            if (arr[j]>arr[j+1]){
+            if (arr[j]>arr[j+1]){//数组越界，当j=4的时候，j+1已经是5了，第六个数据，是未初始化的
                 swap(arr,j,j+1);
                 flag=0;
             }
