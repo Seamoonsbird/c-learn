@@ -31,6 +31,9 @@ int main(void) {
 }
 
 void countSort(int arr[],int n){
+
+    if (n <= 1) return;//增强健壮性
+
     int i=0;
 
     int max=arr[0];
@@ -49,7 +52,7 @@ void countSort(int arr[],int n){
     for (i=0;i<=max;i++){
         while(countArr[i]>0){
             arr[index++]=i;
-            countArr[arr[i]]--;
+            countArr[i]--;//注意这里错了，想想为什么
         }
     }
     free(countArr);
