@@ -52,7 +52,7 @@ void countSort(int arr[],int n,int exp){
         count[arr[i]/exp%10]++;
     }
 
-    for (int i=1;i<=10;i++){
+    for (int i=1;i<10;i++){//这里不能用<=10，因为count[10]越界
         count[i]+=count[i-1];//因为这里有i-1，所以不可以让i从0开始循环
     }
 
