@@ -47,13 +47,13 @@ int findmax(int arr[],int n){
 }
 void countSort(int arr[],int n,int exp){
     int output[N]={0};
-    int count[10];
+    int count[10]={0};//这里一定要记住初始化，不然后面++操作就会直接加
     for (int i=0;i<n;i++){
         count[arr[i]/exp%10]++;
     }
 
-    for (int i=0;i<10;i++){
-        count[i]+=count[i-1];
+    for (int i=1;i<=10;i++){
+        count[i]+=count[i-1];//因为这里有i-1，所以不可以让i从0开始循环
     }
 
     for (int i=n-1;i>=0;i--){
