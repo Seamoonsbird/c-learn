@@ -1,5 +1,7 @@
 #include <stdio.h>
 #define N 100
+void straight(int arr[],int n);
+
 int main(void){
     int i=0,j=0;
     int arr[10];
@@ -13,9 +15,19 @@ int main(void){
     }
     printf("\n");
 
-    for (i=1;i<n;i++){
+    straight(arr,n);
+    
+    printf("排序后的结果为：\n");
+    for (i=0;i<n;i++){
+        printf("\t%d",*(arr+i));
+    }
+    printf("\n");
+    return 0;
+}
+void straight(int arr[],int n){
+    for (int i=1;i<n;i++){
         int k=-1;
-        for (j=i-1;j>=0;j--){
+        for (int j=i-1;j>=0;j--){
             if (arr[i]>=arr[j]){
                 k=j;
                 break;
@@ -37,10 +49,4 @@ int main(void){
             这一块的覆盖要注意起与终范围*/
         }
     }
-    printf("排序后的结果为：\n");
-    for (i=0;i<n;i++){
-        printf("\t%d",*(arr+i));
-    }
-    printf("\n");
-    return 0;
 }
