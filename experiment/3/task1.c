@@ -21,7 +21,7 @@ int main(void){
     int i=0;
     int j=0;
     printf("请问你要分别买几张票\n");
-    int n[100]={0};
+    int n[100]={0};//这里刚开始用了n[N]，明显是不可以的，因为次数可以超过20
     for (i=0;i<m;i++){
         scanf("%d",n+i);
     }
