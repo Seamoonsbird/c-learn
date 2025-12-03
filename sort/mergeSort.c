@@ -66,7 +66,7 @@ void merge(int array[],int left,int mid,int right){
         temp[k++]=array[j++];
     }
     /*
-    这两个while循环其实不是同时都要执行的，只能有一个while执行，诉讼一不必担心
+    这两个while循环其实不是同时都要执行的，只能有一个while执行，所以不必担心
     */
     for (k=left;k<=right;k++){
         array[k]=temp[k];
