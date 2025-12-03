@@ -21,7 +21,7 @@ int main(void){
     int i=0;
     int j=0;
     printf("请问你要分别买几张票\n");
-    int n[M]={0};
+    int n[100]={0};
     for (i=0;i<m;i++){
         scanf("%d",n+i);
     }
@@ -34,7 +34,6 @@ int main(void){
     int k=0;
     for (k=0;k<m;k++){
         for(i=0;i<M;i++){
-
             j=0;
             while(seat[i][j]!=0){
                 if(++j>N){
