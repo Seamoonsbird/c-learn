@@ -43,25 +43,45 @@ int main(void){
             if(seat[i][j]==0&&j+n[k]<=N){
                 for(int l=0;l<n[k];l++){
                     seat[i][j]=1;
-                    printf("\t%d%c",i+1,j+65);
+                    if(j!=4){
+                        printf("%d%c",i+1,j+65);
+                    }
+                    else {
+                        printf("%d%c",i+1,j+66);
+                    }
+                    if(l<n[k]-1){
+                        printf(" ");
+                    }
+                    
                     j++;
                 }
-                printf("\n");
                 break;
             }
             else{
                 continue;
             }
+            
         }
         if(i==M){
-            for(int l=0;l<M*N;l++){
+            int count=0;
+            for(int l=0;count<n[k];l++){
                 int *p=&seat[0][0];
                 if(*(p+l)==0){
-                    printf("\t%d%c",l/5+1,l%5+65);
+                    if(l%5!=4){
+                        printf("%d%c",l/5+1,l%5+65);
+                    }
+                    else {
+                        printf("%d%c",l/5+1,l%5+66);
+                    }
+                    if(count<n[k]-1){
+                        printf(" ");
+                    }
                     *(p+l)=1;
+                    count++;
                 }
             }
         }
+        printf("\n");
     }
 
     return 0;
