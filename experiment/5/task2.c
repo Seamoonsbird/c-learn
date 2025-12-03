@@ -28,17 +28,19 @@ Hello, world! This is a world of hello.
 #define N 300
 #define M 100
 #define MAX 50
-void unpack(char input[],char str[M][N]);
+void unpack(char *p,char *str);
 int countf(char str[M][N]);
 void lowletter(char input[]);
 int main(void){
     printf("请输入你要搜索的句子\n");
     char input[N];
     fgets(input,N,stdin);
+    input[strcspn(input, "\n")] = '\0';
     lowletter(input);
 //    puts(input);
     char str[M][N]={0};
-    unpack(input,str);
+    char *q=str[0];
+    unpack(input,q);
     printf("%d",countf(str));
 
     return 0;
@@ -46,26 +48,25 @@ int main(void){
 
 
 
-void unpack(char input[],char str[M][N]){
-    int len=strlen(input);
+void unpack(char *p,char *str){
+    int len=strlen(p);
     int word_index=0;
     int j=0;
     for (int i=0;i<len;i++){
 //        printf("%c\n",input[i]);
-        if(isalpha(input[i])){
-            str[word_index][j]=input[i];
+        if(isalpha(*(p+i))){
+            *(str+word_index*N+j)=*(p+i);
 //            printf("%d\n",j);
             j++;
 //            printf("%d\n",isalpha(input[i]));
 //            printf("\n");
         }
         else{
-            str[word_index][j]='\0';
-            if(str[word_index][j-1]!='\0'){
+            if (j>0){
+                *(str+word_index*N+j)='\0';
                 word_index++;
                 j=0;
             }
-            
         }
     }
 /*  
