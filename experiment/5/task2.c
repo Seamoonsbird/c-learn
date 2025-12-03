@@ -28,7 +28,6 @@ Hello, world! This is a world of hello.
 #define N 300
 #define M 100
 #define MAX 50
-int isletter(char str);
 void unpack(char input[],char str[M][N]);
 int countf(char str[M][N]);
 void lowletter(char input[]);
@@ -37,6 +36,7 @@ int main(void){
     char input[N];
     fgets(input,N,stdin);
     lowletter(input);
+//    puts(input);
     char str[M][N]={0};
     unpack(input,str);
     printf("%d",countf(str));
@@ -44,33 +44,50 @@ int main(void){
     return 0;
 }
 
-int isletter(char str){
-    str>='a'&&str<='z'?1:0;
-}
+
 
 void unpack(char input[],char str[M][N]){
     int len=strlen(input);
+    int word_index=0;
+    int j=0;
     for (int i=0;i<len;i++){
-        int word_index=-1;
-        int j=0;
-        if(isletter(input[i])){
-            word_index++;
+//        printf("%c\n",input[i]);
+        if(isalpha(input[i])){
             str[word_index][j]=input[i];
+//            printf("%d\n",j);
+            j++;
+//            printf("%d\n",isalpha(input[i]));
+//            printf("\n");
         }
         else{
-            j=0;
+            str[word_index][j]='\0';
+            if(str[word_index][j-1]!='\0'){
+                word_index++;
+                j=0;
+            }
+            
         }
     }
+/*  
+    for (int i=0;i<word_index;i++){
+        printf("%s\n",str[i]);
+    }
+*/
 }
 
 int countf(char str[M][N]){
     int count=0;
-    for (int i=0;i<M;i++){
-        if (isletter(str[i][0])){
-            count++;
+    for (int i=0;isalpha(str[i][0]);i++){
+        int flag=1;
+        for (int j=0;j<i;j++){
+            if (strcmp(str[i],str[j])==0){
+                flag=0;
+                break;
+            }
         }
-        else{
-            break;
+        if(flag){
+//            printf("%s\n",str[i]);
+            count++;
         }
     }
     return count;
@@ -78,8 +95,8 @@ int countf(char str[M][N]){
 
 void lowletter(char input[]){
     for (int i=0;i<strlen(input);i++){
-        if(isletter(input[i])){
-            tolower(input[i]);
+        if(isalpha(input[i])){
+            input[i]=tolower(input[i]);
         }
     }
 }
