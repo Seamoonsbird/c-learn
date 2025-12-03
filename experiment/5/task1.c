@@ -36,12 +36,15 @@ int main(void){
     reverse(str[1]);
     char result[51]={0};
     int digit_result[51]={0};
-    for (int i=0;str[0][i]!='\0'||str[1][i]!='\0';i++){
-        int digit1=str[0][i]-'0';
-        int digit2=str[1][i]-'0';
+    for (int i=0;i<strlen(str[0])||i<strlen(str[1]);i++){
+        int digit1=(i<strlen(str[0]))?(str[0][i]-'0'):0;//这里出错误，如果是空的，就是0，那么他的ASCII值是0，不是'0'的48
+        int digit2=(i<strlen(str[1]))?(str[1][i]-'0'):0;
 
         digit_result[i]+=(digit1+digit2)%10;
-        digit_result[i+1]+=(digit1+digit2)/10;
+        if((digit1+digit2)/10>0){
+            digit_result[i+1]+=(digit1+digit2)/10;
+        }
+        
         result[i]=digit_result[i]+'0';
         result[i+1]=digit_result[i+1]+'0';
     }
@@ -51,7 +54,6 @@ int main(void){
 }
 
 void reverse(char str[]){
-    str[strcspn(str,"\n")]='\0';
     char *p=str;
     char *q=str+strlen(str)-1;
     char temp=0;
