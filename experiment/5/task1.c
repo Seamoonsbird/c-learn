@@ -22,16 +22,7 @@ int main(void){
     printf("请输入数字2\n");
     scanf("%s",str[1]);
 
-/*    if (strlen(str[0])<strlen(str[1])){
-        char temp[51];
-        strcpy(temp,str[0]);
-        strcpy(str[0],str[1]);
-        strcpy(str[1],temp);
-    }
-    else{
-        
-    }
-*/
+
     reverse(str[0]);
     reverse(str[1]);
     char result[51]={0};
@@ -43,10 +34,10 @@ int main(void){
         digit_result[i]+=(digit1+digit2)%10;
         if((digit1+digit2)/10>0){
             digit_result[i+1]+=(digit1+digit2)/10;
+            result[i+1]=digit_result[i+1]+'0';
         }
         
         result[i]=digit_result[i]+'0';
-        result[i+1]=digit_result[i+1]+'0';
     }
     reverse(result);
     printf("%s",result);
