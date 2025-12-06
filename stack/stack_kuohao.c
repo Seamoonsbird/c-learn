@@ -75,8 +75,8 @@ int main(void){
     return 0;
 }
 void push(char a,stack *c){
-    c->top++;
     c->data[c->top]=a;
+    c->top++;
 }
 char pop(stack *c){
     c->top--;
