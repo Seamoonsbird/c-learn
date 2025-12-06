@@ -14,25 +14,32 @@ void delete_char(stack *c);
 
 
 int main(void){
-    stack str;
-    initstack(&str);
+    stack str1;
+    stack str2;
+    initstack(&str1);
+    initstack(&str2);
     char ch;
     printf("请输入文本\n");
     while ((ch=getchar())!='\n'){
         switch (ch)
         {
         case '@':
-            delete_line(&str);
+            delete_line(&str1);
             break;
         case '#':
-            delete_char(&str);
+            delete_char(&str1);
+            break;
         default:
-            push(ch,&str);
+            push(ch,&str1);
             break;
         }
     }
-    while(!is_empty(&str)){
-        printf("%c",pop(&str));
+    while(!is_empty(&str1)){
+        str2.data[str2.top]=pop(&str1);
+        str2.top++;
+    }
+    while(!is_empty(&str2)){
+        printf("%c",pop(&str2));
     }
     return 0;
 }
@@ -47,10 +54,10 @@ char pop(stack *c){
     return c->data[c->top];
 }
 void initstack(stack *c){
-    c->top=-1;
+    c->top=0;
 }
 int is_empty(stack *c){
-    return c->top==-1;
+    return c->top==0;
 }
 void delete_line(stack *c){
     while (!is_empty(c)){
