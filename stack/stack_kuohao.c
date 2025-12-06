@@ -57,7 +57,15 @@ int main(void){
                     break;
                 }
             }
+            default:
+            break;
         }
+    }
+    if(is_empty(&c)){
+        printf("TRUE\n");
+    }
+    else{
+        printf("FALSE\n");
     }
     return 0;
 }
