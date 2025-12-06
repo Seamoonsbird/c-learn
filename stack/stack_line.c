@@ -34,12 +34,11 @@ int main(void){
             break;
         }
     }
-    while(!is_empty(&str1)){
-        str2.data[str2.top]=pop(&str1);
-        str2.top++;
-    }
-    while(!is_empty(&str2)){
-        printf("%c",pop(&str2));
+    push('\0',&str1);
+    int i=0;
+    while(str1.data[i]!='\0'){
+        printf("%c",str1.data[i]);
+        i++;
     }
     return 0;
 }
