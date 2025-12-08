@@ -5,11 +5,9 @@ n(n≤100)名同学参加歌唱比赛，并接受 m(m≤20)名评委的评分，
 */
 #include <stdio.h>
 #include <stdlib.h>
-#define N 10
 #define JudgeNum 20
 //#define StudentNum 100
 typedef struct student{
-//    char name[N];
     int score[JudgeNum];
     double aver;
 }student;
@@ -29,9 +27,13 @@ int main(void){
         printf("memory allocation failed\n");
         exit(1);
     }
-    readScore(n,m,&data);
+    readScore(n,m,data);
     double *average=NULL;
     average=(double *)malloc(n*sizeof(double));
+    if(average==NULL){
+        printf("memory allocation failed\n");
+        exit(1);
+    }
     for(int i=0;i<n;i++){
         average[i]=aver(data[i].score,m);
     }
@@ -85,3 +87,14 @@ void readScore(int n,int m,student *p){
         }
     }
 }
+/*
+task1.c: In function ‘main’:
+task1.c:32:19: warning: passing argument 3 of ‘readScore’ from incompatible pointer type [-Wincompatible-pointer-types]
+   32 |     readScore(n,m,&data);
+      |                   ^~~~~
+      |                   |
+      |                   student **
+task1.c:20:37: note: expected ‘student *’ but argument is of type ‘student **’
+   20 | void readScore(int n,int m,student *p);
+      |                            ~~~~~~~~~^
+*/
