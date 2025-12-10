@@ -187,7 +187,7 @@ int load_records(Record rec[], int max_count)
         printf("open failed!\n");
         return -1;
     }
-    while(count<max_count&&(fscanf(fp,"%-19s %-d %-10s %8s",
+    while(count<max_count&&(fscanf(fp,"%19s %d %10s %8s",
         rec[count].name,&rec[count].ms,
         rec[count].date,rec[count].time_str))==4){
         count++;
