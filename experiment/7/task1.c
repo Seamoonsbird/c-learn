@@ -212,10 +212,10 @@ int load_records(Record rec[], int max_count)
 void show_records(const Record rec[], int count)
 {
     // TODO-2: 在此处实现遍历数组并格式化输出的逻辑
-    printf("%-19s %s %-20s","姓名","反应时间(ms)","记录时间");
-    printf("------------------------------------------------\n");
+    printf("%s\t%-19s\t%-8s\t%-20s\t\n","编号","姓名","反应时间(ms)","记录时间");
+    printf("------------------------------------------------------------\n");
     for (int i=0;i<count;i++){
-        printf("%-19s\t%-d\t%-10s %8s\n",rec[i].name,rec[i].ms,
+        printf("%d\t%-19s\t%-8d\t%-10s %8s\n",i+1,rec[i].name,rec[i].ms,
         rec[i].date,rec[i].time_str);
     }
 }
