@@ -187,12 +187,12 @@ int load_records(Record rec[], int max_count)
         printf("open failed!\n");
         return 1;
     }
-    while(count<max_count&&(fscanf(SCORE_FILE,"%19s %d %10c %8c",
+    while(count<max_count&&(fscanf(fp,"%19s %d %10s %8s",
         rec[count].name,&rec[count].ms,
         rec[count].date,rec[count].time_str))==4){
         count++;
     }
-    fclose(SCORE_FILE);
+    fclose(fp);
     return count;
 }
 
@@ -212,19 +212,11 @@ int load_records(Record rec[], int max_count)
 void show_records(const Record rec[], int count)
 {
     // TODO-2: 在此处实现遍历数组并格式化输出的逻辑
-    FILE *fp=fopen(SCORE_FILE,"r");
-    if(!fp){
-        printf("open failed!\n");
-        return 0;
-    }
+    printf("%-5s%-19s%s%-20s","编号","姓名","反应时间(ms)","记录时间");
+    printf("------------------------------------------------\n");
     for (int i=0;i<count;i++){
-        fscanf(SCORE_FILE,"%19s %d %10c %8c",
-        rec[count].name,&rec[count].ms,
-        rec[count].date,rec[count].time_str);
-    }
-    for (int i=0;i<count;i++){
-        printf("%19s %d %10c %8c",rec[count].name,rec[count].ms,
-        rec[count].date,rec[count].time_str);
+        printf("%-19s %-d %-10s %-8s",rec[i].name,rec[i].ms,
+        rec[i].date,rec[i].time_str);
     }
 }
 
@@ -245,5 +237,22 @@ void show_records(const Record rec[], int count)
 int add_record(Record rec[], int *count, int ms)
 {
     // TODO-3: 在此处实现追加记录并写入文件的逻辑
+    printf("what's your name?\n");
+    scanf("%19s",rec[*count].name);
+    rec[*count].ms=ms;
+    time_t time_now;
+    time(&time_now);
+    struct tm *myt = localtime(&time_now);
+    strftime(rec[*count].date,sizeof(rec[*count].date),"%Y-%m-%d",myt);
+    strftime(rec[*count].time_str,sizeof(rec[*count].time_str),"%H:%M:%S",myt);
+    FILE *fp=fopen(SCORE_FILE,"w");
+    if(!fp){
+        printf("open failed\n");
+        return 1;
+    }
+    fprintf(fp,"%-19s %-d %-10s %-8s",rec[*count].name,rec[*count].ms,
+        rec[*count].date,rec[*count].time_str);
+    *count++;
+        fclose(fp);
     return -1;
 }
