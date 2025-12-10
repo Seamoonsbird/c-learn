@@ -185,9 +185,9 @@ int load_records(Record rec[], int max_count)
     FILE *fp=fopen(SCORE_FILE,"r");
     if (!fp){
         printf("open failed!\n");
-        return 1;
+        return -1;
     }
-    while(count<max_count&&(fscanf(fp,"%19s %d %10s %8s",
+    while(count<max_count&&(fscanf(fp,"%-19s %-d %-10s %8s",
         rec[count].name,&rec[count].ms,
         rec[count].date,rec[count].time_str))==4){
         count++;
@@ -212,10 +212,10 @@ int load_records(Record rec[], int max_count)
 void show_records(const Record rec[], int count)
 {
     // TODO-2: 在此处实现遍历数组并格式化输出的逻辑
-    printf("%-5s%-19s%s%-20s","编号","姓名","反应时间(ms)","记录时间");
+    printf("%-19s %s %-20s","姓名","反应时间(ms)","记录时间");
     printf("------------------------------------------------\n");
     for (int i=0;i<count;i++){
-        printf("%-19s %-d %-10s %-8s",rec[i].name,rec[i].ms,
+        printf("%-19s %-d %-10s%8s\n",rec[i].name,rec[i].ms,
         rec[i].date,rec[i].time_str);
     }
 }
@@ -245,14 +245,14 @@ int add_record(Record rec[], int *count, int ms)
     struct tm *myt = localtime(&time_now);
     strftime(rec[*count].date,sizeof(rec[*count].date),"%Y-%m-%d",myt);
     strftime(rec[*count].time_str,sizeof(rec[*count].time_str),"%H:%M:%S",myt);
-    FILE *fp=fopen(SCORE_FILE,"w");
+    FILE *fp=fopen(SCORE_FILE,"a");
     if(!fp){
         printf("open failed\n");
-        return 1;
+        return -1;
     }
-    fprintf(fp,"%-19s %-d %-10s %-8s",rec[*count].name,rec[*count].ms,
+    fprintf(fp,"%-19s %-d %-10s %8s\n",rec[*count].name,rec[*count].ms,
         rec[*count].date,rec[*count].time_str);
-    *count++;
-        fclose(fp);
-    return -1;
+    (*count)++;
+    fclose(fp);
+    return 1;
 }
