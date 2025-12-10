@@ -182,7 +182,17 @@ int load_records(Record rec[], int max_count)
 
     int count = 0;
     // TODO-1: 在此处实现从文件读取记录到 rec[] 中的逻辑
-
+    FILE *fp=fopen(SCORE_FILE,"r");
+    if (!fp){
+        printf("open failed!\n");
+        return 1;
+    }
+    while(count<max_count&&(fscanf(SCORE_FILE,"%19s %d %10c %8c",
+        rec[count].name,&rec[count].ms,
+        rec[count].date,rec[count].time_str))==4){
+        count++;
+    }
+    fclose(SCORE_FILE);
     return count;
 }
 
@@ -202,6 +212,20 @@ int load_records(Record rec[], int max_count)
 void show_records(const Record rec[], int count)
 {
     // TODO-2: 在此处实现遍历数组并格式化输出的逻辑
+    FILE *fp=fopen(SCORE_FILE,"r");
+    if(!fp){
+        printf("open failed!\n");
+        return 0;
+    }
+    for (int i=0;i<count;i++){
+        fscanf(SCORE_FILE,"%19s %d %10c %8c",
+        rec[count].name,&rec[count].ms,
+        rec[count].date,rec[count].time_str);
+    }
+    for (int i=0;i<count;i++){
+        printf("%19s %d %10c %8c",rec[count].name,rec[count].ms,
+        rec[count].date,rec[count].time_str);
+    }
 }
 
 /* =========================================================
