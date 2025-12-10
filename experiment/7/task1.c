@@ -215,7 +215,7 @@ void show_records(const Record rec[], int count)
     printf("%-19s %s %-20s","姓名","反应时间(ms)","记录时间");
     printf("------------------------------------------------\n");
     for (int i=0;i<count;i++){
-        printf("%-19s %-d %-10s%8s\n",rec[i].name,rec[i].ms,
+        printf("%-19s\t%-d\t%-10s %8s\n",rec[i].name,rec[i].ms,
         rec[i].date,rec[i].time_str);
     }
 }
@@ -250,7 +250,7 @@ int add_record(Record rec[], int *count, int ms)
         printf("open failed\n");
         return -1;
     }
-    fprintf(fp,"%-19s %-d %-10s %8s\n",rec[*count].name,rec[*count].ms,
+    fprintf(fp,"%-19s\t%-d\t%-10s %8s\n",rec[*count].name,rec[*count].ms,
         rec[*count].date,rec[*count].time_str);
     (*count)++;
     fclose(fp);
