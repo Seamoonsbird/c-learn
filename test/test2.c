@@ -35,7 +35,7 @@ int is_word_exist(char only_words[][Max_word_len],int count,char*word){
 int main(){
 	char only_words[Max_words][Max_word_len];
 	char str[Max_len];
-	char temp_word[Max_word_len];
+	char temp_word[Max_word_len]={0};
 
 	//读取并存入 	
 	fgets(str, Max_len, stdin);
@@ -65,11 +65,15 @@ int main(){
 		}
 		temp_word[i]='\0';
 	
-	if(!is_word_exist(only_words,word_count,temp_word)){
-		strcpy(only_words[word_count],temp_word);
-		word_count++;
+		if(!is_word_exist(only_words,word_count,temp_word)){
+			strcpy(only_words[word_count],temp_word);
+			word_count++;
+		}
+		for(int j=0;temp_word[j]!='\0';j++){
+			temp_word[j]='\0';
+		}
+		i=0;
 	}
-}
 
     printf("%d",word_count);
 	return 0;
