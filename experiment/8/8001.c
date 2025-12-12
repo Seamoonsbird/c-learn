@@ -34,8 +34,8 @@ void sort_interest(int *interest, int n) {
         }
         if (k!=i){
             int temp=interest[k];
-            interest[k]=temp;
-            interest[i]=interest[k];
+            interest[k]=interest[i];
+            interest[i]=temp;
         }
         
     }
