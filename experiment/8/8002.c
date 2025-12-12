@@ -31,32 +31,13 @@ void find_top_k_index(int *interest, int n, int k, int *top_k_index) {
 
     // 请在此处编写代码
     for (int i=0;i<k;i++){
-        top_k_index[i]=i;
-    }
-    for (int i=k/2-1;k>=0;k--){
-        heapAdjust(interest,k,i);
-    }
-    for (int i=k+1;i<n;i++){
-        if(interest[0]<interest[i]){
-            
+        int temp_index=i;
+        for (int j=i+1;j<n;j++){
+            if (interest[j]>interest[temp_index]){
+                temp_index=j;
+            }
         }
+        top_k_index[i]=temp_index;
     }
     
-}
-void heapAdjust(int *arr,int n,int i){
-    int maxidx=i;
-    int left=2*i+1;
-    int right=2*i+2;
-    if (left<n&&arr[maxidx]>arr[left]){
-        maxidx=left;
-    }
-    if (right<n&&arr[maxidx]>arr[right]){
-        maxidx=right;
-    }
-    if (maxidx!=i){
-        int temp=arr[i];
-        arr[i]=arr[maxidx];
-        arr[maxidx]=temp;
-        heapAdjust(arr,n,maxidx);
-    }
 }
