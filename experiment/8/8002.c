@@ -34,12 +34,12 @@ void find_top_k_index(int *interest, int n, int k, int *top_k_index) {
         int temp_index=i;
         for (int j=i+1;j<n;j++){
             if (interest[j]>interest[temp_index]){
-                int temp=interest[i];
-                interest[i]=interest[temp_index];
-                interest[temp_index]=temp;
                 temp_index=j;
             }
         }
+        int temp=interest[i];
+        interest[i]=interest[temp_index];
+        interest[temp_index]=temp;
         top_k_index[i]=temp_index;
     }
     
