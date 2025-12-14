@@ -58,7 +58,7 @@ void find_top_k_index(int *interest, int n, int k, int *top_k_index) {
 */
     //建立临时堆并进行初始化
     heap temp_arr[100];
-    for (int i=0;i<100;i++){
+    for (int i=0;i<k;i++){
         initheap(temp_arr+i);
     }
 
