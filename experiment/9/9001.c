@@ -145,8 +145,13 @@ int jsonBracketCheckBasic(const char *json_str) {
         }
         if(isRightBracket(json_str[i])){
             StackElem elem;
-            stackPop(&json_stack,&elem);
+            StackResult result=stackPop(&json_stack,&elem);
+            if (result!=STACK_OK){
+                stackDestroy(&json_stack);
+                return 0;
+            }
             if(!isBracketMatch(elem.bracket,json_str[i])){
+                stackDestroy(&json_stack);
                 return 0;
             }
         }
@@ -218,8 +223,13 @@ int escape=0;
             }
             if (isRightBracket(json_str[i])){
                 StackElem elem;
-                stackPop(&json_stack,&elem);
+                StackResult result=stackPop(&json_stack,&elem);
+                if (result!=STACK_OK){
+                    stackDestroy(&json_stack);
+                    return 0;
+                }
                 if(!isBracketMatch(elem.bracket,json_str[i])){
+                    stackDestroy(&json_stack);
                     return 0;
                 }
             }
