@@ -78,8 +78,8 @@ StackResult stackPop(Stack* stack, StackElem* elem){
         return STACK_EMPTY;
     }
     // 步骤2：将栈顶元素赋值给elem（bracket和position）
-    elem->bracket=stack->data->bracket;
-    elem->position=stack->data->position;
+    elem->bracket=stack->data[stack->top].bracket;
+    elem->position=stack->data[stack->top].position;
     // 步骤3：栈顶指针-1
     stack->top-=1;
     // 步骤4：返回STACK_OK
@@ -93,8 +93,8 @@ StackResult stackPeek(Stack* stack, StackElem* elem) {
         return STACK_EMPTY;
     }
     // 步骤2：将栈顶元素赋值给elem（bracket和position）
-    elem->bracket=stack->data->bracket;
-    elem->position=stack->data->position;
+    elem->bracket=stack->data[stack->top].bracket;
+    elem->position=stack->data[stack->top].position;
     // 步骤4：返回STACK_OK
     return STACK_OK;
 }
