@@ -47,7 +47,7 @@ StackResult stackPush(Stack* stack, char bracket, int position){
         // 学生实现：
     // 步骤1：检查栈是否满（top+1 == capacity），若满则尝试扩容（需不超过max_capacity）
     if (stack->top+1==stack->capacity&&stack->capacity<=stack->max_capacity){
-        stack->data=realloc(stack->data,sizeof(StackElem)*(stack->capacity)+1);
+        stack->data=(StackElem *)realloc(stack->data,sizeof(StackElem)*(stack->capacity)+1);
     }
     // 步骤2：扩容失败返回STACK_FULL，成功则更新capacity
     if (stack->data==NULL){
