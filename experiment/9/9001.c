@@ -34,6 +34,9 @@ StackResult stackInit(Stack* stack, int init_capacity, int max_capacity){
     }
     // 步骤2：为stack->data分配内存（malloc）
     stack->data=(StackElem *)malloc(sizeof(StackElem)*init_capacity);
+    if (stack->data==NULL){
+        return STACK_MEM_ERR;
+    }
     // 步骤3：初始化top=-1，capacity=init_capacity，max_capacity=max_capacity
     stack->top=-1;
     stack->capacity=init_capacity;
@@ -46,16 +49,22 @@ StackResult stackInit(Stack* stack, int init_capacity, int max_capacity){
 StackResult stackPush(Stack* stack, char bracket, int position){
         // 学生实现：
     // 步骤1：检查栈是否满（top+1 == capacity），若满则尝试扩容（需不超过max_capacity）
-    if (stack->top+1==stack->capacity&&stack->capacity<=stack->max_capacity){
-        stack->data=(StackElem *)realloc(stack->data,sizeof(StackElem)*(stack->capacity+1));
-    }
     // 步骤2：扩容失败返回STACK_FULL，成功则更新capacity
-    if (stack->data==NULL){
-        return STACK_FULL;
+    
+    if (stack->top+1==stack->capacity){
+        if (stack->capacity>=stack->max_capacity){
+            return STACK_FULL;    
+        }
+        int temp_cap=stack->capacity+1;
+        StackElem *temp_data=(StackElem *)realloc(stack->data,sizeof(StackElem)*temp_cap);
+        if (temp_data==NULL){
+            return STACK_MEM_ERR;
+        }
+        stack->data=temp_data;
+        stack->capacity=temp_cap;
     }
-    else {
-        stack->capacity+=1;
-    }
+    
+    
     // 步骤3：栈顶指针+1，存入bracket和position
     stack->top+=1;
     stack->data[stack->top].bracket=bracket;
@@ -139,7 +148,7 @@ int jsonBracketCheckBasic(const char *json_str) {
     //        - 遇到左括号（{/[）：压栈（stackPush）
     //        - 遇到右括号（}/]）：弹栈并检查匹配（isBracketMatch），不匹配则返回0
     //        - 其他字符（如字母、数字、引号）：跳过
-    for (int i=0;i<100;i++){
+    for (int i=0;json_str[i]!='\0';i++){
         if(isLeftBracket(json_str[i])){
             stackPush(&json_stack,json_str[i],i);
         }
@@ -150,7 +159,7 @@ int jsonBracketCheckBasic(const char *json_str) {
                 stackDestroy(&json_stack);
                 return 0;
             }
-            if(!isBracketMatch(elem.bracket,json_str[i])){
+            else if(!isBracketMatch(elem.bracket,json_str[i])){
                 stackDestroy(&json_stack);
                 return 0;
             }
@@ -160,14 +169,16 @@ int jsonBracketCheckBasic(const char *json_str) {
         }
     }
     // 步骤4：遍历结束后，若栈为空则返回1（合法），否则返回0（左括号多余）
+    // 步骤5：销毁栈（stackDestroy）
     if (stackIsEmpty(&json_stack)){
+        stackDestroy(&json_stack);
         return 1;
     }
     else {
+        stackDestroy(&json_stack);
         return 0;
     }
-    // 步骤5：销毁栈（stackDestroy）
-    stackDestroy(&json_stack);
+    
 }
 
 // 栈进阶版本实现
@@ -195,7 +206,7 @@ int escape=0;
 //             * 遇到左括号（{/[）：压栈（stackPush）
 //             * 遇到右括号（}/]）：弹栈并检查匹配（isBracketMatch），不匹配则返回0
 //             * 其他字符（如字母、数字、冒号等）：跳过
-    for (int i=0;i<100;i++){
+    for (int i=0;json_str[i]!='\0';i++){
         if(in_string==1){
             if (escape==1){
                 escape=0;
@@ -221,7 +232,7 @@ int escape=0;
             if (isLeftBracket(json_str[i])){
                 stackPush(&json_stack,json_str[i],i);
             }
-            if (isRightBracket(json_str[i])){
+            else if (isRightBracket(json_str[i])){
                 StackElem elem;
                 StackResult result=stackPop(&json_stack,&elem);
                 if (result!=STACK_OK){
@@ -239,14 +250,16 @@ int escape=0;
         }
     }
 // 步骤5：遍历结束后，检查栈是否为空且不在字符串内，两者都满足则返回1，否则返回0
+// 步骤6：销毁栈（stackDestroy）
     if (stackIsEmpty(&json_stack)&&in_string==0){
+        stackDestroy(&json_stack);
         return 1;
     }
     else {
+        stackDestroy(&json_stack);
         return 0;
     }
-// 步骤6：销毁栈（stackDestroy）
-    stackDestroy(&json_stack);
+
 
 }
 
