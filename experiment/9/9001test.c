@@ -261,6 +261,3 @@ int main(){
     // 返回JSON括号匹配结果，基础版只能处理简单情况，进阶版总能返回正确答案
     printf("%d %d", result1,result2);
 }
-
-
-
