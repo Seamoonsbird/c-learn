@@ -45,25 +45,24 @@ void request(Queue* q, const char* name, int level) {
     }
     // 插入逻辑：高等级插在低等级用户前面，同等级则排在后面
     // TODO：请按照该部分的要求补全代码
-    
-    Node *pr=NULL;
-    Node *p=q->front;
-    for (p=q->front;p->next!=NULL&&p->level>=newNode->level;p=p->next){
-        pr=p;
-    }
-    if(pr!=NULL){
-        pr->next=newNode;
-        newNode->next=p;
-        if (newNode->next==NULL){
-            q->rear=newNode;
+    else {
+        Node *pr=NULL;
+        Node *p=q->front;
+        for (p=q->front;p->next!=NULL&&p->level>=newNode->level;p=p->next){
+         pr=p;
+        }
+        if(pr!=NULL){
+            pr->next=newNode;
+            newNode->next=p;
+            if (newNode->next==NULL){
+                q->rear=newNode;
+            }
+        }
+        else {
+            newNode->next=q->front;
+            q->front=newNode;
         }
     }
-    else {
-        newNode->next=q->front;
-        q->front=newNode;
-    }
-    
-    
 }
 
 // Download操作：输出队首元素，并删除该元素
@@ -161,7 +160,7 @@ int main() {
             // 完善用户等级判断逻辑，当出现无效用户等级时，输出：“无效的用户等级，请输入 1（普通） 2（VIP） 3（SVIP）。”，然后换行。
             // TODO：
             if (level!=1&&level!=2&&level!=3){
-                printf("无效的用户等级，请输入 1（普通） 2（VIP） 3（SVIP）。");
+                printf("无效的用户等级，请输入 1（普通） 2（VIP） 3（SVIP）。\n");
                 continue;
             }
             request(&q, name, level);
@@ -184,7 +183,7 @@ int main() {
         // 完善代码逻辑，当输入无效命令时，请输出“无效命令，请重新输入。”，然后换行
         // TODO：
         else {
-            printf("无效命令，请重新输入。");
+            printf("无效命令，请重新输入。\n");
             continue;
         }
     }
