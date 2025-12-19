@@ -48,8 +48,8 @@ void request(Queue* q, const char* name, int level) {
     else {
         Node *pr=NULL;
         Node *p=q->front;
-        for (p=q->front;p->next!=NULL&&p->level>=newNode->level;p=p->next){
-         pr=p;
+        for (p=q->front;p!=NULL&&p->level>=newNode->level;p=p->next){
+            pr=p;
         }
         if(pr!=NULL){
             pr->next=newNode;
