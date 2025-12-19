@@ -113,7 +113,7 @@ void removeUser(Queue* q, const char* name) {
     }
     }
     //若元素在队尾
-    if (q->rear==curr){
+    else if (q->rear==curr){
         prev->next=NULL;
         q->rear=prev;
     }
