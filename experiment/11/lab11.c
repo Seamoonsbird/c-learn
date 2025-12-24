@@ -238,12 +238,14 @@ void add_song(PlaylistManager* manager, const char* title, const char* artist,
     //  - 将 title / artist / filepath 拷贝到结构体中
     //  - 注意字符串结尾要保证有 '\0'
     //  - 新节点的 next 指针此时应指向 NULL
-    strcpy(newSong->title,title);
-    newSong->title[strlen(title)]='\0';
-    strcpy(newSong->artist,artist);
-    newSong->artist[strlen(artist)]='\0';
-    strcpy(newSong->filepath,filepath);
-    newSong->filepath[strlen(filepath)]='\0';
+    strncpy(newSong->title, title, sizeof(newSong->title) - 1);
+    newSong->title[sizeof(newSong->title) - 1] = '\0';
+
+    strncpy(newSong->artist, artist, sizeof(newSong->artist) - 1);
+    newSong->artist[sizeof(newSong->artist) - 1] = '\0';
+
+    strncpy(newSong->filepath, filepath, sizeof(newSong->filepath) - 1);
+    newSong->filepath[sizeof(newSong->filepath) - 1] = '\0';
     newSong->next=NULL;
 
 
@@ -504,6 +506,31 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
      * - 插入完成后，记得更新歌曲总数 song_count；如 current 为空，可让它指向 head 作为默认值。
      */
 
+            strncpy(newSong->title, title, sizeof(newSong->title) - 1);
+        newSong->title[sizeof(newSong->title) - 1] = '\0';
+
+        strncpy(newSong->artist, artist, sizeof(newSong->artist) - 1);
+        newSong->artist[sizeof(newSong->artist) - 1] = '\0';
+
+        strncpy(newSong->filepath, filepath, sizeof(newSong->filepath) - 1);
+        newSong->filepath[sizeof(newSong->filepath) - 1] = '\0';
+
+        newSong->next=NULL;
+
+    Song *cur=manager->head;
+
+    if (position<manager->song_count+1&&position>=0){
+        for (int i=0;i<position-1;i++){
+            cur=cur->next;
+        }
+        newSong->next=cur;
+        manager->head=newSong;
+    }
+    else if (position==manager->song_count+1){
+        manager->tail->next=newSong;
+        manager->tail=newSong;
+    }
+    manager->song_count++;
     printf("已插入到位置 %d：%s - %s\n", position, newSong->title, newSong->artist);
     return 1;
 }
@@ -519,6 +546,8 @@ void destroy_playlist(PlaylistManager* manager)
         //  - 释放节点前，必须先保存 current->next
         //  - free(current) 之后，current 就不能再使用了
         //  - 最后让 current 指向下一个节点，继续循环
+        free(current);
+        current=current->next;
 
     }
     init_playlist_manager(manager);
