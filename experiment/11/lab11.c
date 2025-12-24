@@ -339,6 +339,9 @@ int delete_songs_by_title(PlaylistManager* manager, const char* title)
             else {
                 prev->next=cur->next;
             }
+            if (manager->current==cur){
+                manager->current++;
+            }
             free(cur);
             manager->song_count--;
             deleted=1;
