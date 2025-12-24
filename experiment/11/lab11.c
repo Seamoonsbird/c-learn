@@ -232,12 +232,8 @@ void add_song(PlaylistManager* manager, const char* title, const char* artist,
     /* TODO: 初始化 newSong 的数据域 */
     // TIP:
     //  - 给歌曲分配一个 id（通常在原尾结点 id 的基础上 +1）
-    if (manager->tail==NULL){
-        newSong->id=1;
-    }
-    else {
-        newSong->id=manager->tail->id+1;
-    }
+    newSong->id = (manager->tail != NULL) ? manager->tail->id + 1 : 1;
+
     
     //  - 将 title / artist / filepath 拷贝到结构体中
     //  - 注意字符串结尾要保证有 '\0'
@@ -458,6 +454,16 @@ int play_song_random(PlaylistManager* manager)
     //  - 可以使用循环让指针每次向后移动一个节点
     //  - 循环过程中要注意指针是否变为 NULL，避免非法访问
     //  - 如果遍历结束后指针为 NULL，可以回退到 head 作为兜底处理
+
+    p=manager->head;
+    for (int i=0;i<index;i++){
+        if (p->next!=NULL){
+            p=p->next;
+        }
+        else {
+            p=manager->head;
+        }
+    }
 
     manager->current = p;
     printf("随机播放：%s - %s\n", p->title, p->artist);
