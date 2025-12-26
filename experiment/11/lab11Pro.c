@@ -168,7 +168,7 @@ int load_songs_from_file(PlaylistManager* manager, const char* filename) {
         else {
             manager->tail->next=newSong;
             newSong->prev=manager->tail;
-            manager->tail=NULL;
+            manager->tail=newSong;
         }
 
         manager->song_count++;
@@ -263,25 +263,24 @@ int delete_song_by_title(PlaylistManager* manager, const char* title) {
             }
             if (cur->prev==NULL){
                 manager->head=next;
-                if (next->next!=NULL){
+                if (next!=NULL){
                     next->prev=NULL;
                 }
-                cur->next=NULL;
             }
             else if(next==NULL){
                 manager->tail=cur->prev;
-                cur->prev->next=NULL;
-                cur->prev=NULL;
+                if (cur->prev!=NULL){
+                    cur->prev->next=NULL;
+                }
+                
             }
             else {
                 cur->prev->next=next;
                 next->prev=cur->prev;
-                cur->prev=NULL;
-                cur->next=NULL;
             }
             free(cur);
             manager->song_count--;
-            deleted=1;
+            deleted++;
         }
 
         cur = next;
@@ -475,6 +474,17 @@ int play_song_random(PlaylistManager* manager) {
        - 若意外走到 NULL，可回到 head
        - 将 current 指向选中的歌曲
     */
+    Song *p=manager->head;
+    for (int i=0;i<index;i++){
+        if (p->next!=NULL){
+            p=p->next;
+        }
+        else {
+            p=manager->head;
+        }
+    }
+
+    manager->current = p;
 
     printf("随机播放：%s - %s\n", manager->current->title, manager->current->artist);
     play_audio(manager->current->filepath);
@@ -517,6 +527,39 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
        - 最后维护 song_count 和 current
     */
 
+    newSong->prev=NULL;
+    newSong->next=NULL;
+    if (manager->head==NULL){
+        manager->head=newSong;
+        manager->tail=newSong;
+        manager->song_count++;
+    }
+    else {
+        Song *cur=manager->head;
+        if (position<manager->song_count+1&&position>=0){
+            for (int i=0;i<position-1;i++){
+                cur=cur->next;
+            }
+            newSong->next=cur;
+            newSong->prev=cur->prev;
+            if (cur->prev!=NULL){
+                cur->prev->next=newSong;
+            }
+            else {
+                manager->head=newSong;
+            }
+            cur->prev=newSong;
+            
+        }
+        else {
+            manager->tail->next=newSong;
+            newSong->prev=manager->tail;
+            manager->tail=newSong;
+        }
+        manager->song_count++;
+        
+    }
+
     printf("已插入到位置 %d：%s - %s\n", position, newSong->title, newSong->artist);
     return 1;
 }
@@ -532,6 +575,23 @@ void sort_by_title(PlaylistManager* manager) {
        - 最后更新 head 和 tail
     */
 
+    
+    Song *p=manager->head;
+    for (int i=0;i<manager->song_count;i++){
+        Song *cur=p->next;
+        Song maxsong={0};
+        
+        if (strcmp(p->title,cur->title)>0){
+            maxsong=*cur;
+            if(cur->next!=NULL){
+                cur=cur->next;
+            }
+        }
+        if (maxsong.id!=0){
+            Song tempsong;
+            strcpy()
+        }
+    }
     printf("已按标题排序。\n");
 }
 

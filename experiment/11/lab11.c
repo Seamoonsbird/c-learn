@@ -506,7 +506,7 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
      * - 插入完成后，记得更新歌曲总数 song_count；如 current 为空，可让它指向 head 作为默认值。
      */
 
-            strncpy(newSong->title, title, sizeof(newSong->title) - 1);
+        strncpy(newSong->title, title, sizeof(newSong->title) - 1);
         newSong->title[sizeof(newSong->title) - 1] = '\0';
 
         strncpy(newSong->artist, artist, sizeof(newSong->artist) - 1);
@@ -518,18 +518,27 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
         newSong->next=NULL;
 
     Song *cur=manager->head;
-
-    if (position<manager->song_count+1&&position>=0){
-        for (int i=0;i<position-1;i++){
-            cur=cur->next;
-        }
-        newSong->next=cur;
+    Song *p=NULL;
+    if (manager->head==NULL){
         manager->head=newSong;
-    }
-    else if (position==manager->song_count+1){
-        manager->tail->next=newSong;
         manager->tail=newSong;
+        manager->song_count++;
     }
+    else {
+        if (position<manager->song_count+1&&position>=0){
+            for (int i=0;i<position-1;i++){
+                p=cur;
+                cur=cur->next;
+            }
+            newSong->next=cur;
+            p->next=newSong;
+        }
+        else if (position==manager->song_count+1){
+            manager->tail->next=newSong;
+            manager->tail=newSong;
+        }
+    }
+    
     manager->song_count++;
     printf("已插入到位置 %d：%s - %s\n", position, newSong->title, newSong->artist);
     return 1;
