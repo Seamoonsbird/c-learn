@@ -18,8 +18,9 @@ int main(void){
         return 0;
     }
     int seat[M][N]={0};
-    int i=0;
-    int j=0;
+    int i=0;//行
+    int j=0;//列
+    // seat[M][N]的含义：0=空座，1=已售出；i范围0~19（对应1~20排），j范围0~4（对应A/B/C/D/F）
     printf("请问你要分别买几张票\n");
     int n[100]={0};//这里刚开始用了n[N]，明显是不可以的，因为次数可以超过20
     for (i=0;i<m;i++){
@@ -32,6 +33,7 @@ int main(void){
         }
     }
     int k=0;
+    //这个for是为了遍历每一次买票
     for (k=0;k<m;k++){
         for(i=0;i<M;i++){
             j=0;
@@ -41,8 +43,11 @@ int main(void){
                 }
             }
             if(seat[i][j]==0&&j+n[k]<=N){
+                //给每一次买票分配座位
                 for(int l=0;l<n[k];l++){
                     seat[i][j]=1;
+                    //改变作为是否售出的标志
+                    //输出座位号
                     if(j!=4){
                         printf("%d%c",i+1,j+65);
                     }
@@ -58,12 +63,14 @@ int main(void){
                 break;
             }
             else{
+                //本行无法满足要求，继续下一行寻找
                 continue;
             }
             
         }
         if(i==M){
-            int count=0;
+            //没有找到可以满足要求的行，分配最小的空座位
+            int count=0;//记录已经分配的座位数
             for(int l=0;count<n[k];l++){
                 int *p=&seat[0][0];
                 if(*(p+l)==0){

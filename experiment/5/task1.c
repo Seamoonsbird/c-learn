@@ -22,7 +22,7 @@ int main(void){
     printf("请输入数字2\n");
     scanf("%s",str[1]);
 
-
+    //反转字符串，方便从低位开始相加
     reverse(str[0]);
     reverse(str[1]);
     char result[51]={0};
@@ -32,6 +32,7 @@ int main(void){
         int digit2=(i<strlen(str[1]))?(str[1][i]-'0'):0;
 
         digit_result[i]+=(digit1+digit2)%10;
+        //处理进位
         if((digit1+digit2)/10>0){
             digit_result[i+1]+=(digit1+digit2)/10;
             result[i+1]=digit_result[i+1]+'0';

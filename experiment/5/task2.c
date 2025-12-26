@@ -54,6 +54,7 @@ void unpack(char *p,char *str){
     int j=0;
     for (int i=0;i<len;i++){
 //        printf("%c\n",input[i]);
+        //遍历每一个字母
         if(isalpha(*(p+i))){
             *(str+word_index*N+j)=*(p+i);
 //            printf("%d\n",j);
@@ -66,6 +67,7 @@ void unpack(char *p,char *str){
                 *(str+word_index*N+j)='\0';
                 word_index++;
                 j=0;
+                //开始下一个单词，j一定要记得初始化
             }
         }
     }
@@ -76,6 +78,7 @@ void unpack(char *p,char *str){
 */
 }
 
+//统计不同单词的数量
 int countf(char str[M][N]){
     int count=0;
     for (int i=0;isalpha(str[i][0]);i++){
@@ -94,6 +97,8 @@ int countf(char str[M][N]){
     return count;
 }
 
+
+//将字符串全部转为小写
 void lowletter(char input[]){
     for (int i=0;i<strlen(input);i++){
         if(isalpha(input[i])){
