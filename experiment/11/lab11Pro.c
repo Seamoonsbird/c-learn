@@ -577,19 +577,37 @@ void sort_by_title(PlaylistManager* manager) {
 
     
     Song *p=manager->head;
-    for (int i=0;i<manager->song_count;i++){
+    for (int i=0;i<manager->song_count-1;i++){
         Song *cur=p->next;
-        Song maxsong={0};
+        Song *maxsong=p;
         
-        if (strcmp(p->title,cur->title)>0){
-            maxsong=*cur;
-            if(cur->next!=NULL){
-                cur=cur->next;
+        for (int j=i+1;j<manager->song_count;j++){
+            if (strcmp(maxsong->title,cur->title)>0){
+                maxsong=cur;
+                if(cur->next!=NULL){
+                    cur=cur->next;
+                }
             }
         }
-        if (maxsong.id!=0){
+
+        
+        if (maxsong!=p){
             Song tempsong;
-            strcpy()
+            strcpy(tempsong.title,maxsong->title);
+            strcpy(maxsong->title,p->title);
+            strcpy(p->title,tempsong.title);
+
+            strcpy(tempsong.artist,maxsong->artist);
+            strcpy(maxsong->artist,p->artist);
+            strcpy(p->artist,tempsong.artist);
+
+            strcpy(tempsong.filepath,maxsong->filepath);
+            strcpy(maxsong->filepath,p->filepath);
+            strcpy(p->filepath,tempsong.filepath);
+            
+        }
+        if (p->next!=NULL){
+            p=p->next;
         }
     }
     printf("已按标题排序。\n");
