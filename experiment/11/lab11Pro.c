@@ -605,6 +605,9 @@ void sort_by_title(PlaylistManager* manager) {
             strcpy(maxsong->filepath,p->filepath);
             strcpy(p->filepath,tempsong.filepath);
             
+            tempsong.id=maxsong->id;
+            maxsong->id=p->id;
+            p->id=tempsong.id;
         }
         if (p->next!=NULL){
             p=p->next;
