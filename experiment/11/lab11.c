@@ -493,7 +493,7 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
     }
 
     // id 仅用于链表内部管理，采用自增方式
-    newSong->id = (manager->tail != NULL) ? manager->tail->id + 1 : 1;
+    newSong->id = (manager->tail != NULL) ? manager->song_count + 1 : 1;
     /* TODO:
      * 在这里完成新节点 newSong 的初始化 + 插入链表 + 收尾更新。
      * 需要做的事情包括：
@@ -531,7 +531,12 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
                 cur=cur->next;
             }
             newSong->next=cur;
-            p->next=newSong;
+            if (p!=NULL){
+                p->next=newSong;
+            }
+            else{
+                manager->head=newSong;
+            }
         }
         else if (position==manager->song_count+1){
             manager->tail->next=newSong;

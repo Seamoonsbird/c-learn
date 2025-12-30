@@ -507,7 +507,7 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
         return 0;
     }
 
-    newSong->id = (manager->tail != NULL) ? manager->tail->id + 1 : 1;
+    newSong->id = (manager->tail != NULL) ? manager->song_count + 1 : 1;
 
     strncpy(newSong->title, title, sizeof(newSong->title) - 1);
     newSong->title[sizeof(newSong->title) - 1] = '\0';
@@ -584,9 +584,9 @@ void sort_by_title(PlaylistManager* manager) {
         for (int j=i+1;j<manager->song_count;j++){
             if (strcmp(maxsong->title,cur->title)>0){
                 maxsong=cur;
-                if(cur->next!=NULL){
-                    cur=cur->next;
-                }
+            }
+            if(cur->next!=NULL){
+                cur=cur->next;
             }
         }
 
