@@ -47,6 +47,7 @@ int partition(int array[],int left,int right){
             array[j]=temp;
         }
     }
+    return i;
 }
 
 void quickSort(int array[],int left,int right){
