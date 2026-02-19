@@ -518,14 +518,14 @@ int insert_song_at(PlaylistManager* manager, int position, const char* title,
     strncpy(newSong->filepath, filepath, sizeof(newSong->filepath) - 1);
     newSong->filepath[sizeof(newSong->filepath) - 1] = '\0';
 
-        /* TODO：在指定位置插入新节点
-       - 初始化新节点的 prev / next
-       - 处理空表情况
-       - position <= 1：插入表头
-       - position > song_count：插入表尾
-       - 否则：插入到中间位置
-       - 最后维护 song_count 和 current
-    */
+/* TODO：在指定位置插入新节点
+    - 初始化新节点的 prev / next
+    - 处理空表情况
+    - position <= 1：插入表头
+    - position > song_count：插入表尾
+    - 否则：插入到中间位置
+    - 最后维护 song_count 和 current
+*/
 
     newSong->prev=NULL;
     newSong->next=NULL;
